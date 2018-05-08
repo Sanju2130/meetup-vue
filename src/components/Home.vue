@@ -51,7 +51,6 @@
         },
         methods: {
         onLoadMeetup (id) {
-            console.log('heloo')
             this.$router.push('/meetups/' + id)
             }
         }

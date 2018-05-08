@@ -72,8 +72,8 @@ new Vue({
 		authDomain: 'meetup-f442d.firebaseapp.com',
 		databaseURL: 'https://meetup-f442d.firebaseio.com',
 		projectId: 'meetup-f442d',
-		storageBucket: 'meetup-f442d.appspot.com',
-		})
+		storageBucket: 'gs://meetup-f442d.appspot.com',
+	})
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
 				this.$store.dispatch('autoSignIn', user)

@@ -1,6 +1,6 @@
 <template>
-    <v-container>
-        <v-layout row wrap v-if="userIsAuthenticated">
+    <v-container v-if="userIsAuthenticated">
+        <v-layout row wrap>
             <v-flex xs12>
                 <v-card>
                     <v-card-title>

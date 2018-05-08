@@ -1,5 +1,5 @@
 <template>
-	<v-container v-if="userIsAuthenticated">
+	<v-container>
 		<v-layout row>
 			<v-flex xs12 sm6 offset-sm3>
 				<h1 class="error--text">Create A New Meetup</h1>
@@ -20,7 +20,7 @@
 					</v-layout>
 					<v-layout row>
 						<v-flex xs12 sm6 offset-sm3>
-							<v-btn raised dark @click="onClickFile">Upload Image</v-btn>
+							<v-btn raised dark @click="onPickFile">Upload Image</v-btn>
 							<input type="file" style="display: none" ref="fileInput" accept="image/*" @change="onFilePicked">
 						</v-flex>
 					</v-layout>
@@ -74,7 +74,6 @@
 				date: new Date().toJson,
 				picker: null,
 				image: null
-				
 			}
 		},
 		computed: {
@@ -90,10 +89,7 @@
 					time: this.picker
 				}
 				return dateTime
-			},
-			userIsAuthenticated () {
-			    return this.$store.getters.user !== null && this.$store.getters.user !== undefined
-		    }
+			}
 		},
 		methods: {
 			createNewMeetup () {
@@ -111,17 +107,18 @@
 					date: this.submitDateTime.date,
 					time: this.submitDateTime.time,
 				}
+				console.log(meetupData.image)
 				this.$store.dispatch('createMeetup', meetupData)
 				this.$router.push('/meetups')
 			},
-			onClickFile () {
+			onPickFile () {
 				this.$refs.fileInput.click()
 			},
-			onFilePicked () {
+			onFilePicked (event) {
 				const files = event.target.files
 				let filename = files[0].name
 				if (filename.lastIndexOf('.') <= 0) {
-					return alert('Please Add a Valid File.!')
+					return alert('Please add a valid file')
 				}
 				const fileReader = new FileReader()
 				fileReader.addEventListener('load', () => {
@@ -131,6 +128,28 @@
 				this.image = files[0]
 			}
 		}
-		
 	}
 </script>
+
+<!-- <v-menu
+								ref="menu2"
+								:close-on-content-click="false"
+								v-model="menu2"
+								:nudge-right="40"
+								:return-value.sync="date"
+								lazy
+								transition="scale-transition"
+								offset-y
+								full-width
+								min-width="290px"
+							>
+								<v-text-field
+								slot="activator"
+								v-model="date"
+								label="Picker without buttons"
+								prepend-icon="event"
+								readonly
+								></v-text-field>
+								<v-date-picker v-model="date" @input="$refs.menu2.save(date)"></v-date-picker>
+
+							</v-menu>							 -->
