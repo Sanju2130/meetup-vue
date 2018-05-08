@@ -1,21 +1,31 @@
 <template>
     <v-container v-if="userIsAuthenticated">
-        <v-layout row wrap>
+        <v-layout row wrap v-if="loading">
+            <v-flex xs12 class="text-xs-center">
+                <v-progress-circular indeterminate color="primary" :width="8" :size="80"></v-progress-circular>
+            </v-flex>
+        </v-layout>
+        <v-layout row wrap v-else>
             <v-flex xs12>
                 <v-card>
                     <v-card-title>
                         <h2 class="mb-0 black--text">{{ meetup.title }}</h2>
+                        <template v-if="userCreated">
+                            <v-spacer></v-spacer>
+                            <app-edit-meetup :meetup="meetup"></app-edit-meetup>
+                        </template>
                     </v-card-title>
                     <v-card-media :src="meetup.imageURL"
                         height="400px">
                     </v-card-media>
                     <v-card-text>
                         <div><h3 class="primary--text">{{ meetup.date | date }}, {{ meetup.time }} - {{ meetup.location }}</h3></div>
+                        <!-- <div><app-edit-meetup-date :meetup="meetup" v-if="userCreated"></app-edit-meetup-date></div> -->
                         <div>{{ meetup.description }}</div>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn dark class="black">Register</v-btn>
+                        <app-register :meetupId="meetup.id" v-if="userIsAuthenticated && !userCreated"></app-register>
                     </v-card-actions>
                 </v-card>
             </v-flex>
@@ -32,7 +42,16 @@
             },
             userIsAuthenticated () {
 			    return this.$store.getters.user !== null && this.$store.getters.user !== undefined
-		    }
+            },
+            userCreated () {
+                if (!this.userIsAuthenticated) {
+                    return false
+                }
+                return this.$store.getters.user.id === this.meetup.userId
+            },
+            loading () {
+                return this.$store.getters.loading
+            }
         }
     }
 </script>

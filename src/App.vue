@@ -61,7 +61,7 @@ export default {
 				menuItems = [
 					{ icon: 'weekend', title: 'View Meetups', link: '/meetups' },
 					{ icon: 'local_activity', title: 'Organize Meetups', link: '/meetup/new' },
-					{ icon: 'person', title: 'Profile', link: '/profile' },
+					// { icon: 'person', title: 'Profile', link: '/profile' },
 				]
 			}
 			return menuItems

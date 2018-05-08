@@ -13,6 +13,7 @@
 							<form @submit.prevent="onSignUp">
 								<v-layout row>
 									<v-flex xs12>
+										<h2 class="display-1 error--text text-xs-center mb-3">SIGN-UP</h2>
 										<v-text-field name="email" label="Mail" id="email" v-model="email" type="email" required></v-text-field>
 									</v-flex>
 								</v-layout>

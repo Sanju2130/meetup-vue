@@ -1,5 +1,5 @@
 <template>
-	<v-container>
+	<v-container v-if="userIsAuthenticated">
 		<v-layout row>
 			<v-flex xs12 sm6 offset-sm3>
 				<h1 class="error--text">Create A New Meetup</h1>
@@ -89,7 +89,10 @@
 					time: this.picker
 				}
 				return dateTime
-			}
+			},
+            userIsAuthenticated () {
+			    return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+            },
 		},
 		methods: {
 			createNewMeetup () {

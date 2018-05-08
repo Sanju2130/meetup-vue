@@ -5,6 +5,11 @@ import router from './router'
 import { store } from './store'
 import DateFilter from './filters/date'
 import AlertComp from './components/Shared/Alert.vue'
+import EditMeetDialog from './components/Meetup/Edit/EditMeetDialog.vue'
+import EditMeetupDateTime from './components/Meetup/Edit/EditMeetupDateTime.vue'
+import RegisterDialog from './components/Meetup/Registration/RegisterDialog.vue'
+import Profile from './components/User/Profile.vue'
+
 import {
 	Vuetify,
 	VApp,
@@ -16,6 +21,9 @@ import {
 	VIcon,
 	VGrid,
 	VAlert,
+	VDialog,
+	VJumbotron,
+	VDivider,
 	VTextField,
 	VDatePicker,
 	VProgressCircular,
@@ -37,6 +45,9 @@ Vue.use(Vuetify, {
 		VIcon,
 		VGrid,
 		VAlert,
+		VDialog,
+		VJumbotron,
+		VDivider,
 		VTextField,
 		VDatePicker,
 		VProgressCircular,
@@ -59,6 +70,9 @@ Vue.use(Vuetify, {
 Vue.config.productionTip = false
 Vue.filter('date', DateFilter)
 Vue.component('app-alert', AlertComp)
+Vue.component('app-edit-meetup', EditMeetDialog)
+Vue.component('app-edit-meetup-date', EditMeetupDateTime)
+Vue.component('app-register', RegisterDialog)
 
 /* eslint-disable no-new */
 new Vue({
@@ -77,6 +91,7 @@ new Vue({
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
 				this.$store.dispatch('autoSignIn', user)
+				this.$store.dispatch('fetchUserData')
 			}
 		})
 		this.$store.dispatch('loadedMeetups')
